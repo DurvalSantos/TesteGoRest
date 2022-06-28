@@ -1,0 +1,1383 @@
+{
+	"info": {
+		"_postman_id": "b82240e1-a801-4ede-91cc-8bfdff2bec95",
+		"name": "goREST_Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20046345"
+	},
+	"item": [
+		{
+			"name": "Get User",
+			"item": [
+				{
+					"name": "CT001 - Listar sem filtro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"   pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body response\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    _.each(jsonData, (item) => {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"email\");\r",
+									"        pm.expect(item).to.have.property(\"gender\");\r",
+									"        pm.expect(item).to.have.property(\"status\");\r",
+									"    })\r",
+									"\r",
+									"       pm.collectionVariables.set(\"vid\", jsonData[0].id);\r",
+									"       pm.collectionVariables.set(\"vname\", jsonData[0].name);\r",
+									"       pm.collectionVariables.set(\"vemail\", jsonData[0].email);\r",
+									"       pm.collectionVariables.set(\"vgender\", jsonData[0].gender);\r",
+									"       pm.collectionVariables.set(\"vstatus\", jsonData[0].status);\r",
+									"       pm.collectionVariables.set(\"vname2\", jsonData[0].name);\r",
+									"       \r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT002 - Listar usuário com todos filtros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"   pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body response\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    _.each(jsonData, (item) => {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"email\");\r",
+									"        pm.expect(item).to.have.property(\"gender\");\r",
+									"        pm.expect(item).to.have.property(\"status\");\r",
+									"\r",
+									"        pm.expect(item.name).to.eq(pm.collectionVariables.get(\"vname\"));\r",
+									"        pm.expect(item.email).to.eq(pm.collectionVariables.get(\"vemail\"));\r",
+									"        pm.expect(item.gender).to.eq(pm.collectionVariables.get(\"vgender\"));\r",
+									"        pm.expect(item.status).to.eq(pm.collectionVariables.get(\"vstatus\"));\r",
+									"\r",
+									"\r",
+									"    })\r",
+									"\r",
+									"    //teste de body responde vazio\r",
+									"    pm.expect(0).not.to.eql(jsonData.length);\r",
+									"  \r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users?name={{vname}}&email={{vemail}}&gender={{vgender}}&status={{vstatus}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{vname}}"
+								},
+								{
+									"key": "email",
+									"value": "{{vemail}}"
+								},
+								{
+									"key": "gender",
+									"value": "{{vgender}}"
+								},
+								{
+									"key": "status",
+									"value": "{{vstatus}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT003 - Listar usuário com filtro nome",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"   pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body response\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    _.each(jsonData, (item) => {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"email\");\r",
+									"        pm.expect(item).to.have.property(\"gender\");\r",
+									"        pm.expect(item).to.have.property(\"status\");\r",
+									"\r",
+									"        pm.expect(item.name).to.eq(pm.collectionVariables.get(\"vname\"));\r",
+									"        //pm.expect(item.email).to.eq(pm.collectionVariables.get(\"email\"));\r",
+									"        //pm.expect(item.gender).to.eq(pm.collectionVariables.get(\"gender\"));\r",
+									"        //pm.expect(item.status).to.eq(pm.collectionVariables.get(\"status\"));\r",
+									"        \r",
+									"\r",
+									"    })\r",
+									"\r",
+									"    //teste de body responde vazio\r",
+									"    pm.expect(0).not.to.eql(jsonData.length);\r",
+									"\r",
+									"    //console.log(\"Variável : \" + jsonData);\r",
+									"  \r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Test data value of the response\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eq(pm.collectionVariables.get(\"vname\");\r",
+									"\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users?name=Silvio Pessoa",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{vemail}}",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "{{vgender}}",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "{{vstatus}}",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "Silvio Pessoa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT004 - Listar usuário com filtro email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"   pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body response\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    _.each(jsonData, (item) => {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"email\");\r",
+									"        pm.expect(item).to.have.property(\"gender\");\r",
+									"        pm.expect(item).to.have.property(\"status\");\r",
+									"\r",
+									"        //pm.expect(item.name).to.eq(pm.collectionVariables.get(\"vname\"));\r",
+									"        //pm.expect(item.email).to.eq(pm.collectionVariables.get(\"email\"));\r",
+									"        //pm.expect(item.gender).to.eq(pm.collectionVariables.get(\"gender\"));\r",
+									"        //pm.expect(item.status).to.eq(pm.collectionVariables.get(\"status\"));\r",
+									"\r",
+									"\r",
+									"    })\r",
+									"\r",
+									"    //teste de body responde vazio\r",
+									"    pm.expect(0).not.to.eql(jsonData.length);\r",
+									"\r",
+									"    //console.log(\"Variável : \" + jsonData);\r",
+									"\r",
+									"  \r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users?email=silviop@pessoa.bt",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{vemail}}",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "{{vgender}}",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "{{vstatus}}",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "silviop@pessoa.bt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT005 - Listar usuário com filtro gender",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"   pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body response\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    _.each(jsonData, (item) => {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"email\");\r",
+									"        pm.expect(item).to.have.property(\"gender\");\r",
+									"        pm.expect(item).to.have.property(\"status\");\r",
+									"\r",
+									"        //pm.expect(item.name).to.eq(pm.collectionVariables.get(\"vname\"));\r",
+									"        //pm.expect(item.email).to.eq(pm.collectionVariables.get(\"email\"));\r",
+									"        //pm.expect(item.gender).to.eq(pm.collectionVariables.get(\"vgender\"));\r",
+									"        //pm.expect(item.status).to.eq(pm.collectionVariables.get(\"status\"));\r",
+									"\r",
+									"\r",
+									"    })\r",
+									"\r",
+									"    //teste de body responde vazio\r",
+									"    pm.expect(0).not.to.eql(jsonData.length);\r",
+									"\r",
+									"    //console.log(\"Variável : \" + jsonData);\r",
+									"\r",
+									"  \r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users?gender=male",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{vemail}}",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "{{vgender}}",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "{{vstatus}}",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "male"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT006 - Listar usuário com filtro status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"   pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body response\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    _.each(jsonData, (item) => {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"email\");\r",
+									"        pm.expect(item).to.have.property(\"gender\");\r",
+									"        pm.expect(item).to.have.property(\"status\");\r",
+									"\r",
+									"        //pm.expect(item.name).to.eq(pm.collectionVariables.get(\"vname\"));\r",
+									"        //pm.expect(item.email).to.eq(pm.collectionVariables.get(\"email\"));\r",
+									"        //pm.expect(item.gender).to.eq(pm.collectionVariables.get(\"gender\"));\r",
+									"        //pm.expect(item.status).to.eq(pm.collectionVariables.get(\"vstatus\"));\r",
+									"        //pm.expect(item.status).to.eq(\"inactive\");\r",
+									"\r",
+									"\r",
+									"    })\r",
+									"\r",
+									"    //teste de body responde vazio\r",
+									"    pm.expect(0).not.to.eql(jsonData.length);\r",
+									"\r",
+									"    //console.log(\"Variável : \" + jsonData);\r",
+									"\r",
+									"  \r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users?status=inactive",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "inactive"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT009 - Listar usuário com filtros nome aleatório",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"   pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body response\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    _.each(jsonData, (item) => {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"email\");\r",
+									"        pm.expect(item).to.have.property(\"gender\");\r",
+									"        pm.expect(item).to.have.property(\"status\");\r",
+									"\r",
+									"        //pm.expect(item.name).to.eq(pm.collectionVariables.get(\"vname\"));\r",
+									"        //pm.expect(item.email).to.eq(pm.collectionVariables.get(\"email\"));\r",
+									"        //pm.expect(item.gender).to.eq(pm.collectionVariables.get(\"gender\"));\r",
+									"        //pm.expect(item.status).to.eq(pm.collectionVariables.get(\"status\"));\r",
+									"\r",
+									"\r",
+									"    })\r",
+									"\r",
+									"    //teste de body responde vazio\r",
+									"    pm.expect(0).not.to.eql(jsonData.length);\r",
+									"\r",
+									"    //console.log(\"Variável : \" + jsonData);\r",
+									"\r",
+									"  \r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users?name={{$randomFullName}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{vemail}}",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "{{vgender}}",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "{{vstatus}}",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "{{$randomFullName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT010 - Teste Listar usuário com todos filtros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"   pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body response\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    _.each(jsonData, (item) => {\r",
+									"        pm.expect(item).to.have.property(\"id\");\r",
+									"        pm.expect(item).to.have.property(\"name\");\r",
+									"        pm.expect(item).to.have.property(\"email\");\r",
+									"        pm.expect(item).to.have.property(\"gender\");\r",
+									"        pm.expect(item).to.have.property(\"status\");\r",
+									"                \r",
+									"\r",
+									"        pm.expect(item.name).to.eq(pm.collectionVariables.get(\"vname\"));\r",
+									"        pm.expect(item.email).to.eq(pm.collectionVariables.get(\"vemail\"));\r",
+									"        pm.expect(item.gender).to.eq(pm.collectionVariables.get(\"vgender\"));\r",
+									"        pm.expect(item.status).to.eq(pm.collectionVariables.get(\"vstatus\"));\r",
+									"        pm.expect(item.name).to.eq(pm.collectionVariables.get(\"vname2\"));\r",
+									"\r",
+									"\r",
+									"    })\r",
+									"\r",
+									"    //teste de body responde vazio\r",
+									"    pm.expect(0).not.to.eql(jsonData.length);\r",
+									"  \r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users?name={{vname}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{vemail}}",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "{{vgender}}",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "{{vstatus}}",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "{{vname}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\")\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Body response check \r",
+									"pm.test(\"Test data type of the response\", () => {\r",
+									"\tpm.expect(jsonData).to.be.an(\"object\");\r",
+									"\tpm.expect(jsonData.name).to.be.a(\"string\");\r",
+									"\tpm.expect(jsonData.gender).to.be.a(\"string\");\r",
+									"\tpm.expect(jsonData.status).to.be.a(\"string\");\r",
+									"\tpm.expect(jsonData.email).to.be.a(\"string\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users/{{viduser}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{viduser}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create",
+			"item": [
+				{
+					"name": "CT001 - Cadastrar Usuário",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"//pm.globals.set(\"token\", data.token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    //\"id\": 5000,\r\n    \"name\": \"Silvio Pessoa\",\r\n    \"email\": \"silviop@pessoa.bt\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT002 - Cadastrar campo name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"//pm.globals.set(\"token\", data.token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    //\"id\": 5000,\r\n    \"name\": \"Silvio Pessoa\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT003 - Cadastrar campo email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var emailaleatorio = pm.variables.replaceIn(\"{{$randomEmail}}\");\r",
+									"var namealeatorio = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"//pm.globals.set(\"token\", data.token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    //\"id\": 5000,\r\n    \"email\": \"silviop@pessoa.bt\"\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "emailaleatorio",
+									"value": "{{$randomEmail}}",
+									"disabled": true
+								},
+								{
+									"key": "namealeatorio",
+									"value": "{{$randomFullName}}",
+									"disabled": true
+								},
+								{
+									"key": "userstatus",
+									"value": "\"active\"",
+									"disabled": true
+								},
+								{
+									"key": "usergender",
+									"value": "\"male\"",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Aleatorio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var emailaleatorio = pm.variables.replaceIn(\"{{$randomEmail}}\");\r",
+									"var namealeatorio = pm.variables.replaceIn(\"{{$randomFullName}}\");\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"//pm.globals.set(\"token\", data.token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n\r\n{\r\n    //\"id\": 5000,\r\n    \"name\" : \"{{namealeatorio}}\",\r\n    \"email\": \"{{emailaleatorio}}\",\r\n    \"gender\": \"{{usergender}}\",\r\n    \"status\": \"{{userstatus}}\"\r\n}\r\n\r\n//{\r\n    //\"id\": 5000,\r\n//    \"name\": \"Silvio Pessoa\",\r\n//    \"email\": \"silviop@pessoa.bt\",\r\n//    \"gender\": \"male\",\r\n//    \"status\": \"inactive\"\r\n//}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							],
+							"query": [
+								{
+									"key": "emailaleatorio",
+									"value": "{{$randomEmail}}",
+									"disabled": true
+								},
+								{
+									"key": "namealeatorio",
+									"value": "{{$randomFullName}}",
+									"disabled": true
+								},
+								{
+									"key": "userstatus",
+									"value": "\"active\"",
+									"disabled": true
+								},
+								{
+									"key": "usergender",
+									"value": "\"male\"",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update",
+			"item": [
+				{
+					"name": "Pre Condição",
+					"item": [
+						{
+							"name": "Cadastrar usuário",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											" \r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.collectionVariables.set(\"viduser\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Silvio Pessoa\",\r\n    \"email\": \"silviop@pessoa.bt\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"inactive\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/public/v2/users",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"public",
+										"v2",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CT001 - Atualizar Usuário existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									" \r",
+									"pm.test(\"Body response\", function () {\r",
+									"   pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"Silvio Pessoa Silva\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"email\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"silviop@pessoa.br\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"gender\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"male\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"status\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"active\");\r",
+									"   pm.expect(jsonData.name).to.eql(\"Silvio Pessoa Silva\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Silvio Pessoa Silva\",\r\n    \"email\": \"silviop@pessoa.br\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users/{{viduser}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{viduser}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT002 - Atualizar Usuário inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									" \r",
+									"pm.test(\"Body response\", function () {\r",
+									"   pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"Silvio Pessoa Silva\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"email\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"silviop@pessoa.br\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"gender\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"male\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"status\");\r",
+									"   pm.expect(pm.response.text()).to.include(\"active\");\r",
+									"   pm.expect(jsonData.name).to.eql(\"Silvio Pessoa Silva\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Silvio Pessoa Silva 1\",\r\n    \"email\": \"silviop@pessoa.br\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users/{{$randomInt}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{$randomInt}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT003 - Atualizar somente Nome",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Silvio Pessoa Silva 1\"\r\n \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users/{{viduser}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{viduser}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "CT001 - Deletar Usuário Existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users/{{viduser}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{viduser}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CT002 - Deletar usuário inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/public/v2/users/{{$randomInt}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{$randomInt}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "16f73fc7cf764bf0ac0ec7e57d766e3dda780f5f0cc6b0f7328b7b97faaab445",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://gorest.co.in",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "16f73fc7cf764bf0ac0ec7e57d766e3dda780f5f0cc6b0f7328b7b97faaab445",
+			"type": "default"
+		},
+		{
+			"key": "vid",
+			"value": ""
+		},
+		{
+			"key": "vname",
+			"value": ""
+		},
+		{
+			"key": "vemail",
+			"value": ""
+		},
+		{
+			"key": "vgender",
+			"value": ""
+		},
+		{
+			"key": "vstatus",
+			"value": ""
+		},
+		{
+			"key": "vname2",
+			"value": ""
+		},
+		{
+			"key": "viduser",
+			"value": ""
+		}
+	]
+}
